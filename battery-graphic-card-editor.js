@@ -31,3 +31,11 @@ class BatteryGraphicCardEditor extends LitElement {
 }
 
 customElements.define('battery-graphic-card-editor', BatteryGraphicCardEditor);
+
+window.customCards = window.customCards || [];
+window.customCards.push({
+  type: "battery-graphic-card",
+  name: "Battery Graphic Card",
+  preview: false,
+  description: "Karta graficzna wizualizacji poziomu baterii."
+});
