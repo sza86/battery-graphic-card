@@ -1,13 +1,3 @@
-/**
- * @customElement
- * @extends HTMLElement
- */
-class BatteryGraphicCard extends HTMLElement {
-  ...
-}
-
-customElements.define('battery-graphic-card', BatteryGraphicCard);
-
 import { LitElement, html, css } from 'https://unpkg.com/lit-element?module';
 
 class BatteryGraphicCard extends LitElement {
@@ -129,5 +119,5 @@ window.customCards = window.customCards || [];
 window.customCards.push({
   type: "battery-graphic-card",
   name: "Battery Graphic Card",
-  description: "Wizualna karta poziomu baterii z graficznym wskaźnikiem. Wymaga dowolnej encji z wartością procentową."
+  description: "Wizualna karta poziomu baterii z graficznym wskaźnikiem. Wymaga encji z wartością procentową."
 });
