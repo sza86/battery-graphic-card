@@ -103,13 +103,20 @@ class BatteryGraphicCard extends LitElement {
   }
 
   static getConfigElement() {
-    const el = document.createElement("hui-entity-card-editor");
-    return el;
+    const configElement = document.createElement("hui-entities-card-editor");
+    configElement.setConfig({
+      entities: []
+    });
+    return configElement;
   }
 
-  static getStubConfig(hass, entities) {
-    const battery = entities.find(e => hass.states[e].attributes.device_class === "battery") || entities[0] || "sensor.battery";
-    return { entity: battery };
+  static getStubConfig(hass) {
+    const entities = Object.keys(hass.states);
+    const battery = entities.find(e => hass.states[e].attributes.device_class === "battery") || entities[0];
+    return {
+      type: "battery-graphic-card",
+      entity: battery
+    };
   }
 }
 
@@ -119,5 +126,6 @@ window.customCards = window.customCards || [];
 window.customCards.push({
   type: "battery-graphic-card",
   name: "Battery Graphic Card",
-  description: "Wizualna karta poziomu baterii z graficznym wskaźnikiem. Wymaga encji z wartością procentową."
+  preview: false,
+  description: "Wizualna karta poziomu baterii z graficznym wskaźnikiem."
 });
