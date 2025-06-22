@@ -1,6 +1,12 @@
-/* eslint-disable */
-/* @webcomponents/webcomponentsjs */
-/* @lit */
+/**
+ * @customElement
+ * @extends HTMLElement
+ */
+class BatteryGraphicCard extends HTMLElement {
+  ...
+}
+
+customElements.define('battery-graphic-card', BatteryGraphicCard);
 
 import { LitElement, html, css } from 'https://unpkg.com/lit-element?module';
 
