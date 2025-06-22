@@ -2,6 +2,7 @@ class BatteryGraphicCardEditor extends HTMLElement {
   setConfig(config) {
     this._config = config;
     if (!this.content) {
+      this.content = true;
       this.innerHTML = `
         <div class="card-config">
           <paper-input label="Encja (np. sensor.battery)" value="${config.entity || ""}" configKey="entity"></paper-input>
