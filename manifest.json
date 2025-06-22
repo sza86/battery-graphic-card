@@ -1,8 +1,11 @@
 {
   "manifest_version": 1,
   "name": "Battery Graphic Card",
+  "author": "sza86",
+  "description": "Wizualna karta poziomu baterii z graficznym wskaźnikiem",
   "version": "1.0.0",
-  "type": "module",
+  "type": "plugin",
+  "render_readme": true,
   "resources": [
     {
       "file": "battery-graphic-card.js",
