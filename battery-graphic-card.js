@@ -114,11 +114,3 @@ class BatteryGraphicCard extends LitElement {
 }
 
 customElements.define("battery-graphic-card", BatteryGraphicCard);
-
-window.customCards = window.customCards || [];
-window.customCards.push({
-  type: "battery-graphic-card",
-  name: "Battery Graphic Card",
-  preview: false,
-  description: "Wizualna karta poziomu baterii z graficznym wskaźnikiem."
-});
