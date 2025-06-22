@@ -1,31 +1,33 @@
-class BatteryGraphicCardEditor extends HTMLElement {
+import { LitElement, html } from 'lit';
+import { fireEvent } from 'https://cdn.jsdelivr.net/npm/lovelace-card-tools@1.0.0/fire-event.js';
+
+class BatteryGraphicCardEditor extends LitElement {
   setConfig(config) {
     this._config = config;
-    if (!this.content) {
-      this.content = true;
-      this.innerHTML = `
-        <div class="card-config">
-          <paper-input label="Encja (np. sensor.battery)" value="${config.entity || ""}" configKey="entity"></paper-input>
-        </div>
-      `;
-      this.querySelectorAll("paper-input").forEach(el => {
-        el.addEventListener("change", ev => {
-          this._config[ev.target.configKey] = ev.target.value;
-          this._updateConfig();
-        });
-      });
-    }
   }
 
-  _updateConfig() {
-    const event = new Event("config-changed", { bubbles: true, composed: true });
-    event.detail = { config: this._config };
-    this.dispatchEvent(event);
+  get _entity() {
+    return this._config.entity || '';
   }
 
-  get config() {
-    return this._config;
+  render() {
+    return html`
+      <ha-form
+        .data=${this._config}
+        .schema=${[
+          {
+            name: 'entity',
+            selector: { entity: { domain: 'sensor' } },
+          },
+        ]}
+        @value-changed=${ev => {
+          ev.stopPropagation();
+          this._config = ev.detail.value;
+          fireEvent(this, 'config-changed', { config: this._config });
+        }}
+      ></ha-form>
+    `;
   }
 }
 
-customElements.define("battery-graphic-card-editor", BatteryGraphicCardEditor);
+customElements.define('battery-graphic-card-editor', BatteryGraphicCardEditor);
