@@ -120,5 +120,5 @@ window.customCards.push({
   type: "battery-graphic-card",
   name: "Battery Graphic Card",
   preview: false,
-  description: "Wizualna karta poziomu baterii z graficznym wskaźnikiem.",
+  description: "Wizualna karta poziomu baterii z graficznym wskaźnikiem."
 });
