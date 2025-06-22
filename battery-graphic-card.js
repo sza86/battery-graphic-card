@@ -4,7 +4,7 @@ class BatteryGraphicCard extends LitElement {
   static get properties() {
     return {
       hass: {},
-      config: {}
+      config: {},
     };
   }
 
@@ -58,31 +58,31 @@ class BatteryGraphicCard extends LitElement {
 
   setConfig(config) {
     if (!config.entity) {
-      throw new Error("You need to define an entity");
+      throw new Error("Musisz podać encję");
     }
     this.config = config;
   }
 
   render() {
+    if (!this.hass || !this.config) {
+      return html`<ha-card>🔄 Ładowanie...</ha-card>`;
+    }
+
     const stateObj = this.hass.states[this.config.entity];
-    if (!stateObj || isNaN(parseInt(stateObj.state, 10))) {
+    if (!stateObj || isNaN(parseInt(stateObj.state))) {
+      console.warn(`battery-graphic-card: invalid or missing entity '${this.config.entity}'`);
       return html`<ha-card>⚠️ Niepoprawna lub brakująca encja: ${this.config.entity}</ha-card>`;
     }
 
     const level = parseInt(stateObj.state, 10);
-    const current = parseFloat(stateObj.attributes.current || 0);
-    const charging = current >= 0;
+    const currentAttr = stateObj.attributes.current;
+    const current = typeof currentAttr === "undefined" ? null : parseFloat(currentAttr);
+    const charging = current !== null && current >= 0;
 
     let color = "gray";
-    if (charging) {
-      color = "limegreen";
-    } else if (level > 60) {
-      color = "limegreen";
-    } else if (level > 30) {
-      color = "orange";
-    } else {
-      color = "red";
-    }
+    if (charging || level > 60) color = "limegreen";
+    else if (level > 30) color = "orange";
+    else color = "red";
 
     return html`
       <ha-card>
@@ -108,8 +108,8 @@ class BatteryGraphicCard extends LitElement {
   }
 
   static getStubConfig(hass, entities) {
-    const battery = entities.find(e => hass.states[e].attributes.device_class === "battery") || entities[0] || "sensor.battery";
-    return { entity: battery };
+    const battery = entities.find(e => hass.states[e]?.attributes?.device_class === "battery") || entities[0];
+    return { entity: battery || "sensor.battery" };
   }
 }
 
@@ -119,5 +119,5 @@ window.customCards = window.customCards || [];
 window.customCards.push({
   type: "battery-graphic-card",
   name: "Battery Graphic Card",
-  description: "Wizualna karta poziomu baterii z graficznym wskaźnikiem. Wymaga encji z wartością procentową."
+  description: "Wizualna karta poziomu baterii z graficznym wskaźnikiem.",
 });
